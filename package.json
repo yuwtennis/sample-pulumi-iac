@@ -1,11 +1,13 @@
 {
-    "name": "iac",
+    "version": "v0.1.0",
+    "name": "pulumi-sample",
     "main": "index.ts",
     "devDependencies": {
         "@types/node": "^18",
         "typescript": "^5.0.0"
     },
     "dependencies": {
+        "semver": "^7.7.1",
         "@pulumi/aws": "^6.0.0",
         "@pulumi/awsx": "^2.0.2",
         "@pulumi/pulumi": "^3.113.0"
