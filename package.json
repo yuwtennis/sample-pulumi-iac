@@ -1,6 +1,6 @@
 {
     "version": "v0.1.0",
-    "name": "pulumi-sample",
+    "name": "sample-blog-iac",
     "main": "index.ts",
     "devDependencies": {
         "@types/node": "^18",
