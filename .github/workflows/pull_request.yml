@@ -19,6 +19,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22.14.0'
+          cache: 'yarn'
       - uses: pulumi/auth-actions@v1
         with:
           organization: ${{ env.PULUMI_ORG_NAME }}
@@ -29,3 +30,4 @@ jobs:
         with:
           command: preview
           stack-name: ${{ secrets.PULUMI_DEV_STACK_NAME }}
+          comment-on-pr: true
