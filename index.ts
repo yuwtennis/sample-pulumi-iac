@@ -1,10 +1,26 @@
-import {Dev} from "./pkgs/stacks/dev";
+import {Env, SampleBlogDirector} from "./pkgs/director";
+import * as pulumi from "@pulumi/pulumi";
+import * as esc from "@pulumi/esc-sdk";
 
-function main() {
-    const s = new Dev();
+async function main() {
+    const orgName: string = process.env.PULUMI_ORG_NAME!;
+    const envName: string = process.env.PULUMI_ENV_NAME!;
+    const projName: string = pulumi.getProject();
+    const client = esc.DefaultClient();
 
-    s.compile();
+    const openEnv = await client.openAndReadEnvironment(
+        orgName, projName, envName);
+
+    if (!openEnv) {
+        console.error("Failed to open and read the environment");
+        return;
+    }
+    const account = openEnv.values?.dev.account;
+
+    console.log(`Deploying stack for ${pulumi.getStack()}`)
+
+    SampleBlogDirector.create(
+        account, Env[pulumi.getStack() as keyof typeof Env]);
 }
 
-// Export the name of the bucket
-//export const bucketName = bucket.id;
+(async () => {await main()})();
