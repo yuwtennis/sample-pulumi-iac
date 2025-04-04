@@ -15,14 +15,5 @@
         "@pulumi/pulumi": "^3.113.0",
         "semver": "^7.7.1"
     },
-    "devEngines": {
-        "runtime": {
-            "name": "node",
-            "onFail": "error"
-        },
-        "packageManager": {
-            "name": "yarn",
-            "onFail": "error"
-        }
-    }
+    "packageManager": "yarn@1.22.22"
 }
