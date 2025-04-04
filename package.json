@@ -3,16 +3,16 @@
     "name": "sample-blog-iac",
     "main": "index.ts",
     "devDependencies": {
+        "@eslint/js": "^8.57.1",
         "@types/node": "^18",
         "typescript": "^5.0.0",
-        "@eslint/js": "^8.57.1",
         "typescript-eslint": "^8.29.0"
     },
     "dependencies": {
-        "semver": "^7.7.1",
         "@pulumi/aws": "^6.0.0",
         "@pulumi/awsx": "^2.0.2",
+        "@pulumi/esc-sdk": "^0.12.1",
         "@pulumi/pulumi": "^3.113.0",
-        "@pulumi/esc-sdk": "^0.12.1"
+        "semver": "^7.7.1"
     }
 }
