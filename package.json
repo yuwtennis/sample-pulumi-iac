@@ -2,6 +2,8 @@
     "version": "v0.1.0",
     "name": "sample-blog-iac",
     "main": "index.ts",
+    "license": "UNLICENSED",
+    "private": "true",
     "devDependencies": {
         "@eslint/js": "^8.57.1",
         "@types/node": "^18",
