@@ -14,5 +14,15 @@
         "@pulumi/esc-sdk": "^0.12.1",
         "@pulumi/pulumi": "^3.113.0",
         "semver": "^7.7.1"
+    },
+    "devEngines": {
+        "runtime": {
+            "name": "node",
+            "onFail": "error"
+        },
+        "packageManager": {
+            "name": "yarn",
+            "onFail": "error"
+        }
     }
 }
