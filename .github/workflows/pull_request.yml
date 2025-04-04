@@ -1,0 +1,34 @@
+# name: Pulumi
+# on:
+#   - pull_request
+#
+# permissions:
+#   id-token: write
+#   contents: read
+#
+# jobs:
+#   preview:
+#     name: Preview
+#     runs-on: ubuntu-latest
+#     env:
+#       PULUMI_CONFIG_PASSPHRASE: ""
+#       PULUMI_ORG_NAME: ${{ secrets.PULUMI_ORG_NAME }}
+#       PULUMI_ENV_NAME: ${{ secrets.PULUMI_ENV_NAME }}
+#     steps:
+#       - uses: actions/checkout@v4
+#       - uses: actions/setup-node@v4
+#         with:
+#           node-version: '22.14.0'
+#           cache: 'yarn'
+#       - uses: pulumi/auth-actions@v1
+#         with:
+#           organization: ${{ env.PULUMI_ORG_NAME }}
+#           requested-token-type: urn:pulumi:token-type:access_token:personal
+#           scope: "user:${{ secrets.PULUMI_USER }}"
+#       - run: yarn --frozen-lockfile
+#       - uses: pulumi/actions@v6
+#         with:
+#           command: preview
+#           stack-name: ${{ secrets.PULUMI_DEV_STACK_NAME }}
+#           comment-on-pr: true
+#           github-token: ${{ secrets.GITHUB_TOKEN }}
