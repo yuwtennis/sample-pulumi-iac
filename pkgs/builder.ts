@@ -76,7 +76,7 @@ export class SampleBlogBuilder {
     public withPulumiOidcProvider(aws_account_id: string, pulumi_org_name: string): this {
         this.oidcProvider = new aws.iam.OpenIdConnectProvider("pulumi_oidc_provider", {
                 url: `https://${PULUMI_OIDC_PROVIDER_URL}`,
-                clientIdLists: [`aws:${pulumi_org_name}`]
+                clientIdLists: [pulumi_org_name]
             })
 
         // Static for now
