@@ -98,11 +98,6 @@ export class SampleBlogBuilder {
                         test: "StringEquals",
                         variable: `${PULUMI_OIDC_PROVIDER_URL}:aud`,
                         values: [pulumi_org_name]
-                    },
-                    {
-                        test: "StringLike",
-                        variable: `${PULUMI_OIDC_PROVIDER_URL}:sub`,
-                        values: [`pulumi:deploy:org:${pulumi_org_name}:project:${pulumi_proj_name}:*"`]
                     }
                 ]
             }]
