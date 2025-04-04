@@ -1,6 +1,7 @@
 import {Env, SampleBlogDirector} from "./pkgs/director";
 import * as pulumi from "@pulumi/pulumi";
 import * as esc from "@pulumi/esc-sdk";
+import {SampleBlogBuilder} from "./pkgs/builder";
 
 async function main() {
     const orgName: string = process.env.PULUMI_ORG_NAME!;
@@ -15,12 +16,12 @@ async function main() {
         console.error("Failed to open and read the environment");
         return;
     }
-    const account = openEnv.values?.dev.account;
+    const aws_account_id = openEnv.values?.dev.account;
 
     console.log(`Deploying stack for ${pulumi.getStack()}`)
 
-    SampleBlogDirector.create(
-        account, Env[pulumi.getStack() as keyof typeof Env]);
+    const builder = new SampleBlogDirector(aws_account_id, orgName)
+    builder.create(Env[pulumi.getStack() as keyof typeof Env]);
 }
 
 (async () => {await main()})();

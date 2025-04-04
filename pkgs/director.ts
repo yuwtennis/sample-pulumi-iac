@@ -6,7 +6,6 @@ const DEV_SPEC = {
     subnet_private_name: 'main',
     subnet_private_cidr: '10.0.1.0/24',
     blog_repos_name: "blog",
-    pulumi_oidc_provider_name: "api.pulumi.com/oidc"
 }
 
 export enum Env {
@@ -15,7 +14,12 @@ export enum Env {
 
 export class SampleBlogDirector {
 
-    public static create(account: string, env: Env) : any {
+    constructor(
+        public readonly aws_account_id: string,
+        public readonly pulumi_org_name: string) {
+    }
+
+    public create(env: Env) : any {
         if (env == Env.dev) {
             return new SampleBlogBuilder()
                 .withNetwork(
@@ -31,8 +35,8 @@ export class SampleBlogDirector {
                     ]
                 )
                 .withPulumiOidcProvider(
-                    account,
-                    DEV_SPEC.pulumi_oidc_provider_name
+                    this.aws_account_id,
+                    this.pulumi_org_name
                 )
                 .build();
         } else {

@@ -1,11 +1,15 @@
 import * as aws from "@pulumi/aws";
 
+// Constant
+const PULUMI_OIDC_PROVIDER_URL = "api.pulumi.com/oidc"
+
 // Primitive name preferably business application name represents this project
 export class SampleBlog {
     constructor(
         public readonly network: Network,
         public readonly containerRegistry: Array<aws.ecr.Repository>,
-        public readonly cloudStorage: aws.s3.BucketV2
+        public readonly oidcProvider: aws.iam.OpenIdConnectProvider,
+        public readonly iamRoles: Array<aws.iam.Role>,
     ) {}
 }
 
@@ -13,12 +17,6 @@ export class Network {
     constructor(
         public readonly vpc: aws.ec2.Vpc,
         public readonly subnets: Array<aws.ec2.Subnet> = []
-    ) {}
-}
-
-export class OidcProvider {
-    constructor(
-        public readonly pulumi_oidc_provider: aws.iam.OpenIdConnectProvider
     ) {}
 }
 
@@ -34,8 +32,7 @@ type ContainerRegistrySpec = {
 export class SampleBlogBuilder {
     private network!: Network;
     private containerRegistry: Array<aws.ecr.Repository> = [];
-    private oidcProvider!: OidcProvider;
-    private cloudStorage!: aws.s3.BucketV2;
+    private oidcProvider!: aws.iam.OpenIdConnectProvider;
     private iamRoles: Array<aws.iam.Role> = [];
 
     public withNetwork(
@@ -76,13 +73,11 @@ export class SampleBlogBuilder {
         return this;
     }
 
-    public withPulumiOidcProvider(account: string, provider_url: string): this {
-        this.oidcProvider = new OidcProvider(
-            new aws.iam.OpenIdConnectProvider("pulumi_oidc_provider", {
-                url: `https://${provider_url}`,
-                clientIdLists: ["aws:myorg"]
+    public withPulumiOidcProvider(aws_account_id: string, pulumi_org_name: string): this {
+        this.oidcProvider = new aws.iam.OpenIdConnectProvider("pulumi_oidc_provider", {
+                url: `https://${PULUMI_OIDC_PROVIDER_URL}`,
+                clientIdLists: [`aws:${pulumi_org_name}`]
             })
-        )
 
         // Static for now
         const assumeRole = aws.iam.getPolicyDocument({
@@ -92,11 +87,11 @@ export class SampleBlogBuilder {
                 sid: "",
                 principals: [{
                     type: "Federated",
-                    identifiers: [`arn:aws:iam::${account}:oidc-provider/${provider_url}`],
+                    identifiers: [`arn:aws:iam::${aws_account_id}:oidc-provider/${PULUMI_OIDC_PROVIDER_URL}`],
                 }],
                 conditions: [{
                     test: "StringEquals",
-                    variable: `${provider_url}:aud`,
+                    variable: `${PULUMI_OIDC_PROVIDER_URL}:aud`,
                     values: ["pulumi"]
                 }]
             }]
@@ -120,6 +115,10 @@ export class SampleBlogBuilder {
     }
 
     build(): any {
-        return this;
+        return new SampleBlog(
+            this.network,
+            this.containerRegistry,
+            this.oidcProvider,
+            this.iamRoles);
     }
 }
