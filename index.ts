@@ -1,7 +1,6 @@
 import {Env, SampleBlogDirector} from "./pkgs/director";
 import * as pulumi from "@pulumi/pulumi";
-import * as esc from "@pulumi/esc-sdk";
-import {SampleBlogBuilder} from "./pkgs/builder";
+import * as esc from "@pulumi/esc-sdk";;
 
 async function main() {
     const orgName: string = process.env.PULUMI_ORG_NAME!;
@@ -20,7 +19,10 @@ async function main() {
 
     console.log(`Deploying stack for ${pulumi.getStack()}`)
 
-    const builder = new SampleBlogDirector(aws_account_id, orgName)
+    const builder = new SampleBlogDirector(
+        aws_account_id,
+        orgName,
+        projName)
     builder.create(Env[pulumi.getStack() as keyof typeof Env]);
 }
 

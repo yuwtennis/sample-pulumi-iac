@@ -73,7 +73,11 @@ export class SampleBlogBuilder {
         return this;
     }
 
-    public withPulumiOidcProvider(aws_account_id: string, pulumi_org_name: string): this {
+    public withPulumiOidcProvider(
+        aws_account_id: string,
+        pulumi_org_name: string,
+        pulumi_proj_name: string
+    ): this {
         this.oidcProvider = new aws.iam.OpenIdConnectProvider("pulumi_oidc_provider", {
                 url: `https://${PULUMI_OIDC_PROVIDER_URL}`,
                 clientIdLists: [pulumi_org_name]
@@ -89,11 +93,18 @@ export class SampleBlogBuilder {
                     type: "Federated",
                     identifiers: [`arn:aws:iam::${aws_account_id}:oidc-provider/${PULUMI_OIDC_PROVIDER_URL}`],
                 }],
-                conditions: [{
-                    test: "StringEquals",
-                    variable: `${PULUMI_OIDC_PROVIDER_URL}:aud`,
-                    values: ["pulumi"]
-                }]
+                conditions: [
+                    {
+                        test: "StringEquals",
+                        variable: `${PULUMI_OIDC_PROVIDER_URL}:aud`,
+                        values: [pulumi_org_name]
+                    },
+                    {
+                        test: "StringLike",
+                        variable: `${PULUMI_OIDC_PROVIDER_URL}:sub`,
+                        values: [`pulumi:deploy:org:${pulumi_org_name}:project:${pulumi_proj_name}:*"`]
+                    }
+                ]
             }]
         })
 
