@@ -6,7 +6,7 @@ async function main() {
     const orgName: string = process.env.PULUMI_ORG_NAME!;
     const envName: string = process.env.PULUMI_ENV_NAME!;
     const projName: string = pulumi.getProject();
-    // const client = esc.DefaultClient();
+    const client = esc.DefaultClient();
 
     //const openEnv = await client.openAndReadEnvironment(
     //    orgName, projName, envName);
