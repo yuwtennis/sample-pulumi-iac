@@ -8,15 +8,15 @@ async function main() {
     const projName: string = pulumi.getProject();
     const client = esc.DefaultClient();
 
-    //const openEnv = await client.openAndReadEnvironment(
-    //    orgName, projName, envName);
-//
-    //if (!openEnv) {
-    //    console.error("Failed to open and read the environment");
-    //    return;
-    //}
-    //const aws_account_id = openEnv.values?.dev.account;
-//
+    const openEnv = await client.openAndReadEnvironment(
+        orgName, projName, envName);
+
+    if (!openEnv) {
+        console.error("Failed to open and read the environment");
+        return;
+    }
+    const aws_account_id = openEnv.values?.dev.account;
+
     //console.log(`Deploying stack for ${pulumi.getStack()}`)
 
     //const builder = new SampleBlogDirector(
