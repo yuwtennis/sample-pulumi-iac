@@ -4,7 +4,7 @@
     "main": "index.ts",
     "devDependencies": {
         "@eslint/js": "^8.57.1",
-        "@types/node": "^18",
+        "@types/node": "^22",
         "typescript": "^5.0.0",
         "typescript-eslint": "^8.29.0"
     },
