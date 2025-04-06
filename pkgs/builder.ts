@@ -83,8 +83,8 @@ export class SampleBlogBuilder {
             })
 
         // Current session account
-        const aws_account_id = aws.getCallerIdentity()
-            .then((session) => {return session.accountId;} )
+        const aws_account_id = aws.getCallerIdentity({})
+            .then(session => session.accountId);
 
         const assumeRole = aws.iam.getPolicyDocument({
             statements: [{
