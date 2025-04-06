@@ -1,10 +1,10 @@
-import {Env, SampleBlogDirector} from "./pkgs/director";
+import {Env, Director} from "./pkgs/director";
 import * as pulumi from "@pulumi/pulumi";
 import {SpecSchema} from "./pkgs/config";
 
 async function main() {
     const config = new pulumi.Config();
-    const builder = new SampleBlogDirector(
+    const builder = new Director(
         pulumi.getOrganization(),
         pulumi.getProject(),
     );

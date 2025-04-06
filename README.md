@@ -1,7 +1,5 @@
 # pulumi-sample
 
-For local environment, this tutorial encourages you to use asdf.
-
 ## Pre requisite
 
 - AWS account
@@ -10,6 +8,8 @@ For local environment, this tutorial encourages you to use asdf.
 ## Tutorial
 
 ### local
+
+For local environment, this tutorial encourages you to use asdf.
 
 #### Setup
 
@@ -26,7 +26,12 @@ Prepare variables
 
 ```shell
 asdf exec pulumi config env init 
-asdf exec pulumi env set yuwtennis/blog/dev pulumiConfig.aws.account_id YOUR_AWS_ACCOUNT_ID
+asdf exec pulumi env set yuwtennis/iac/dev pulumiConfig.aws.account_id YOUR_AWS_ACCOUNT_ID
+asdf exec pulumi env set yuwtennis/iac/dev pulumiConfig.spec.vpc_name main
+asdf exec pulumi env set yuwtennis/iac/dev pulumiConfig.spec.vpc_cidr 10.0.0.0/16
+asdf exec pulumi env set yuwtennis/iac/dev pulumiConfig.spec.subnet_private_name main
+asdf exec pulumi env set yuwtennis/iac/dev pulumiConfig.spec.subnet_private_cidr 10.0.1.0/24
+asdf exec pulumi env set yuwtennis/iac/dev pulumiConfig.spec.blog_repos_name blog
 ```
 
 #### Install dependencies
@@ -40,8 +45,6 @@ asdf exec yarn install
 ```shell
 # e.g. STACK=dev
 export STACK=YOUR_STACK
-export PULUMI_ORG_NAME=YOUR_PULUMI_ORG_NAME
-export PULUMI_ENV_NAME=aws
 ```
 
 #### Deploy
@@ -52,5 +55,5 @@ asdf exec pulumi up --stack $STACK
 
 #### Teardown
 ```shell
-asdf exec pulumi destroy -C iac/ --stack $STACK
+asdf exec pulumi destroy --stack $STACK
 ```

@@ -1,11 +1,11 @@
-import {SampleBlogBuilder} from "./builder";
+import {PlatformBuilder} from "./builder";
 import {SpecSchema} from "./config";
 
 export enum Env {
     dev,
 }
 
-export class SampleBlogDirector {
+export class Director {
 
     constructor(
         public readonly pulumi_org_name: string,
@@ -14,7 +14,7 @@ export class SampleBlogDirector {
 
     public create(env: Env, config: SpecSchema) : any {
         if (env == Env.dev) {
-            return new SampleBlogBuilder(config.account_id)
+            return new PlatformBuilder(config.account_id)
                 .withNetwork(
                     config.vpc_name,
                     config.vpc_cidr,

@@ -4,7 +4,7 @@ import * as aws from "@pulumi/aws";
 const PULUMI_OIDC_PROVIDER_URL = "api.pulumi.com/oidc"
 
 // Primitive name preferably business application name represents this project
-export class SampleBlog {
+export class Platform {
     constructor(
         public readonly network: Network,
         public readonly containerRegistry: Array<aws.ecr.Repository>,
@@ -29,7 +29,7 @@ type ContainerRegistrySpec = {
     name: string
 }
 
-export class SampleBlogBuilder {
+export class PlatformBuilder {
     private network!: Network;
     private containerRegistry: Array<aws.ecr.Repository> = [];
     private oidcProvider!: aws.iam.OpenIdConnectProvider;
@@ -124,7 +124,7 @@ export class SampleBlogBuilder {
     }
 
     build(): any {
-        return new SampleBlog(
+        return new Platform(
             this.network,
             this.containerRegistry,
             this.oidcProvider,
