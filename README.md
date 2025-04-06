@@ -48,15 +48,16 @@ Below is the diagram describes the states.
 
 ![](./imgs/lifecycle.png)
 
-_ _NONE_ is the state where nothing is there.
+- _NONE_ is the state where nothing is there.
 - _init_ is the state where _stack_ is created and resources are _first_ deployed to the cloud provider.
 - _change_ is the state where members start commiting and the states changes rapidly.
 - _terminated_ is the state where resources are destroyed from the cloud provider.
 
 ### Dependency check
 
-I have setup dependabot for checking vulnerabilities for dependencies.   
-I have used _yarn_ instead of npm since the [supported version is up to v9](https://docs.github.com/en/code-security/dependabot/ecosystems-supported-by-dependabot/supported-ecosystems-and-repositories).
+Make sure the dependencies are up to date . You do not want any vulnerabilities.  
+For this purpose, I have setup dependabot.
+I have used _yarn_ instead of _npm_ since the [supported version is up to v9](https://docs.github.com/en/code-security/dependabot/ecosystems-supported-by-dependabot/supported-ecosystems-and-repositories).
 
 ## Pre requisite
 
@@ -122,3 +123,19 @@ asdf exec pulumi up --stack $STACK
 ```shell
 asdf exec pulumi destroy --stack $STACK
 ```
+
+## Example screenshot
+
+At the time when the PR is created or each commit is sent to PR,  
+_pulumi preview_ is executed.
+
+![](./imgs/deployment.png)
+
+Result is then sent back to the pull request.
+
+![](./imgs/pull-requests.png)
+
+After the merge, deployment feedback is sent to the user.  
+I used the free version so email was my choice.
+
+![](./imgs/deploy-feedback.png)
