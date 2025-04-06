@@ -59,6 +59,10 @@ Make sure the dependencies are up to date . You do not want any vulnerabilities.
 For this purpose, I have setup dependabot.
 I have used _yarn_ instead of _npm_ since the [supported version is up to v9](https://docs.github.com/en/code-security/dependabot/ecosystems-supported-by-dependabot/supported-ecosystems-and-repositories).
 
+### Testing
+
+Tests are not supported yet at this moment.
+
 ## Pre requisite
 
 - AWS account
