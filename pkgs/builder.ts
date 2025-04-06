@@ -74,7 +74,6 @@ export class SampleBlogBuilder {
     }
 
     public withPulumiOidcProvider(
-        aws_account_id: string,
         pulumi_org_name: string,
         pulumi_proj_name: string
     ): this {
@@ -83,7 +82,10 @@ export class SampleBlogBuilder {
                 clientIdLists: [pulumi_org_name]
             })
 
-        // Static for now
+        // Current session account
+        const aws_account_id = aws.getCallerIdentity()
+            .then((session) => {return session.accountId;} )
+
         const assumeRole = aws.iam.getPolicyDocument({
             statements: [{
                 effect: "Allow",

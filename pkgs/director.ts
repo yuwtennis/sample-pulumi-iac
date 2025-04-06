@@ -15,7 +15,6 @@ export enum Env {
 export class SampleBlogDirector {
 
     constructor(
-        public readonly aws_account_id: string,
         public readonly pulumi_org_name: string,
         public readonly pulumi_proj_name: string) {
     }
@@ -36,7 +35,6 @@ export class SampleBlogDirector {
                     ]
                 )
                 .withPulumiOidcProvider(
-                    this.aws_account_id,
                     this.pulumi_org_name,
                     this.pulumi_proj_name
                 )
