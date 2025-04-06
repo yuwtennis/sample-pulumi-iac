@@ -2,6 +2,8 @@
     "version": "v0.1.0",
     "name": "sample-blog-iac",
     "main": "index.ts",
+    "license": "UNLICENSED",
+    "private": "true",
     "devDependencies": {
         "@eslint/js": "^9.23.0",
         "@types/node": "^18",
@@ -11,8 +13,8 @@
     "dependencies": {
         "@pulumi/aws": "^6.0.0",
         "@pulumi/awsx": "^2.0.2",
-        "@pulumi/esc-sdk": "^0.12.1",
         "@pulumi/pulumi": "^3.113.0",
         "semver": "^7.7.1"
-    }
+    },
+    "packageManager": "yarn@1.22.22"
 }

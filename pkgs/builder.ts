@@ -35,6 +35,11 @@ export class SampleBlogBuilder {
     private oidcProvider!: aws.iam.OpenIdConnectProvider;
     private iamRoles: Array<aws.iam.Role> = [];
 
+    constructor(
+        public readonly runtimeAwsAccountId: string
+    ) {
+    }
+
     public withNetwork(
         vpcName: string,
         vpcCidrBlock: string,
@@ -74,7 +79,6 @@ export class SampleBlogBuilder {
     }
 
     public withPulumiOidcProvider(
-        aws_account_id: string,
         pulumi_org_name: string,
         pulumi_proj_name: string
     ): this {
@@ -83,7 +87,6 @@ export class SampleBlogBuilder {
                 clientIdLists: [pulumi_org_name]
             })
 
-        // Static for now
         const assumeRole = aws.iam.getPolicyDocument({
             statements: [{
                 effect: "Allow",
@@ -91,7 +94,7 @@ export class SampleBlogBuilder {
                 sid: "",
                 principals: [{
                     type: "Federated",
-                    identifiers: [`arn:aws:iam::${aws_account_id}:oidc-provider/${PULUMI_OIDC_PROVIDER_URL}`],
+                    identifiers: [`arn:aws:iam::${this.runtimeAwsAccountId}:oidc-provider/${PULUMI_OIDC_PROVIDER_URL}`],
                 }],
                 conditions: [
                     {

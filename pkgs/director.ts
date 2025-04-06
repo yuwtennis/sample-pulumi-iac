@@ -1,12 +1,5 @@
 import {SampleBlogBuilder} from "./builder";
-
-const DEV_SPEC = {
-    vpc_name: 'main',
-    vpc_cidr: '10.0.0.0/16',
-    subnet_private_name: 'main',
-    subnet_private_cidr: '10.0.1.0/24',
-    blog_repos_name: "blog",
-}
+import {SpecSchema} from "./config";
 
 export enum Env {
     dev,
@@ -15,28 +8,26 @@ export enum Env {
 export class SampleBlogDirector {
 
     constructor(
-        public readonly aws_account_id: string,
         public readonly pulumi_org_name: string,
         public readonly pulumi_proj_name: string) {
     }
 
-    public create(env: Env) : any {
+    public create(env: Env, config: SpecSchema) : any {
         if (env == Env.dev) {
-            return new SampleBlogBuilder()
+            return new SampleBlogBuilder(config.account_id)
                 .withNetwork(
-                    DEV_SPEC.vpc_name,
-                    DEV_SPEC.vpc_cidr,
+                    config.vpc_name,
+                    config.vpc_cidr,
                     [
-                        {name: DEV_SPEC.subnet_private_name, cidr: DEV_SPEC.subnet_private_cidr}
+                        {name: config.subnet_private_name, cidr: config.subnet_private_cidr}
                     ]
                 )
                 .withContainerRegistry(
                     [
-                        {name: DEV_SPEC.blog_repos_name}
+                        {name: config.blog_repos_name}
                     ]
                 )
                 .withPulumiOidcProvider(
-                    this.aws_account_id,
                     this.pulumi_org_name,
                     this.pulumi_proj_name
                 )
