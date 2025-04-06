@@ -53,6 +53,11 @@ _ _NONE_ is the state where nothing is there.
 - _change_ is the state where members start commiting and the states changes rapidly.
 - _terminated_ is the state where resources are destroyed from the cloud provider.
 
+### Dependency check
+
+I have setup dependabot for checking vulnerabilities for dependencies.   
+I have used _yarn_ instead of npm since the [supported version is up to v9](https://docs.github.com/en/code-security/dependabot/ecosystems-supported-by-dependabot/supported-ecosystems-and-repositories).
+
 ## Pre requisite
 
 - AWS account
