@@ -11,7 +11,7 @@
         "typescript-eslint": "^8.31.0"
     },
     "dependencies": {
-        "@pulumi/aws": "^6.77.1",
+        "@pulumi/aws": "^6.78.0",
         "@pulumi/awsx": "^2.0.2",
         "@pulumi/pulumi": "^3.163.0",
         "semver": "^7.7.1"
